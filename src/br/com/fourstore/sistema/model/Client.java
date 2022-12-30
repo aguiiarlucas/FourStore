@@ -52,9 +52,9 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "name='" + name + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", pixKey='" + pixKey + '\'' +
+                "Name = '" + name + '\'' +
+                ", Cpf = '" + cpf + '\'' +
+                ", PixKey = '" + pixKey + '\'' +
                 '}';
     }
 }

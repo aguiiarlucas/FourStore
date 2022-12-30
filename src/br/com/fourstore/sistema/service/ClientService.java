@@ -15,7 +15,7 @@ public class ClientService {
     ClientData clientData = new ClientData();
 
     public boolean validationCpf(String cpf) {
-        String pattern = "([0-9]{3}[\\.][0-9]{3}[\\.][0-9]{3}[\\-][0-9]{2})";
+        String pattern = "(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})";
         Pattern regex = Pattern.compile(pattern);
 
         Matcher matcher = regex.matcher(cpf);
@@ -40,6 +40,8 @@ public class ClientService {
 
         verify1 = (N1 * 10 + N2 * 9 + N3 * 8 + N4 * 7
                 + N5 * 6 + N6 * 5 + N7 * 4 + N8 * 3 + N9 * 2);
+
+
         if ((verify1 % 11) < 2) {
             verify1 = 0;
 

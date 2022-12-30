@@ -5,7 +5,10 @@ import br.com.fourstore.sistema.controller.MenuController;
 import br.com.fourstore.sistema.controller.ProductController;
 import br.com.fourstore.sistema.controller.SaleController;
 import br.com.fourstore.sistema.enums.PaymentMethodEnum;
+import br.com.fourstore.sistema.model.Product;
+import br.com.fourstore.sistema.utils.Validations;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -16,19 +19,28 @@ public class MainMenu {
     private ClientController clientController;
     private ProductController productController;
 
+
+    private Validations validations;
+
+    private Product product;
+
+
+
+
     public MainMenu() {
         this.menuController = new MenuController();
         this.sc = new Scanner(System.in);
         this.saleController = new SaleController();
         this.clientController = new ClientController();
         this.productController = new ProductController();
+        this.validations = new Validations();
     }
 
-    public void mainMenu() {
+    public void mainMenu() throws Exception {
         firstMenu();
     }
 
-    private void firstMenu() {
+    private void firstMenu() throws Exception {
         int opc = -1;
         String input;
 
@@ -53,7 +65,7 @@ public class MainMenu {
         }
     }
 
-    private void menuSale() {
+    private void menuSale() throws Exception {
         int opc = -1;
         String input;
 
@@ -93,7 +105,7 @@ public class MainMenu {
             while (true) {
                 System.out.println("\nDigite o sku: ");
                 sku = sc.next();
-                if (productController.getProductBySku(sku) == "Nao existe um produto com o sku " + sku) {
+                if (Objects.equals(productController.getProductBySku(sku), "Nao existe um produto com o sku " + sku)) {
                     System.out.println("Produto nao existe");
                 } else if (!(productController.validateSku(sku))) {
                     System.out.println("SKU nulo");
@@ -222,7 +234,7 @@ public class MainMenu {
     }
 
 
-    private void menuProducts() {
+    private void menuProducts() throws Exception {
         int opc = -1;
         String input;
 
@@ -303,6 +315,12 @@ public class MainMenu {
     }
 
 
+
+
+
+
+
+
     public void cadProduct() {
         String sku;
         boolean flag = true; // setando a condição de inicialização e finalizado do while.
@@ -310,30 +328,25 @@ public class MainMenu {
             System.out.println("Insira o sku do produto");
             sku = sc.next();
             if (productController.validateSku(sku) && (!(productController.productIsRegistered(sku)))) {
-                flag =false; // parar e proseguir  o codigo.
-            }else {
+                flag = false; // parar e proseguir  o codigo.
+            } else {
                 System.out.println("Sku invalido , tente novamente ");
             }
+
         } while (flag);
 
         System.out.println("Digite a descricao do produto: ");
-        sc.nextLine();
-        String description = sc.nextLine();
-        System.out.println("Digite o ID");
-        String id = sc.next();
-        System.out.println("Digite a quantidade: ");
-        int quantity = sc.nextInt();
+        String description = sc.next();
 
+        validations.gerarId();
+        validations.regexInteger();
+        validations.regexPurchasePrice();
+        validations.regexSalePrice();
 
-        System.out.println("Digite o valor da compra: ");
-        Double purchasePrice = sc.nextDouble();
-
-        System.out.println("Digite o valor da venda: ");
-        Double salePrice = sc.nextDouble();
-
-        String retorno = productController.cadProduct(id,sku,description,quantity,purchasePrice,salePrice);
+        String retorno = productController.cadProduct(String.valueOf(Validations.id), sku, description, Integer.parseInt(validations.regexInteger()),Double.parseDouble(validations.regexPurchasePrice()),Double.parseDouble(validations.regexSalePrice()));
         System.out.println(retorno);
     }
+
 
 
     public void updateProductById() {
@@ -462,10 +475,12 @@ public class MainMenu {
             System.out.println(productController.getProductBySku(sku) + "\n");
     }
 
-    private void getProductById( ) {
+    private void getProductById() {
         System.out.println("\n Enter a product id: ");
         String id = sc.next();
         System.out.println(productController.getProductById(id));
     }
-}
 
+
+
+}

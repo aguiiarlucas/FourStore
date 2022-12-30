@@ -13,9 +13,7 @@ public class ProductData implements DataInterface<Product> {
 
     @Override
     public void save(Product product) {
-        System.out.println(
-              "salvo"
-        );listProduct.add(product);
+     listProduct.add(product);
     }
 
     @Override
@@ -48,20 +46,20 @@ public class ProductData implements DataInterface<Product> {
     }
 
     public Product getById(String id) {
-        for (int i = 0; i < listProduct.size(); i++) {
-            String productId = listProduct.get(i).getId();
+        for (Product product : listProduct) {
+            String productId = product.getId();
             if (productId.equals(id)) {
-                return listProduct.get(i);
+                return product;
             }
         }
         return null;
     }
 
     public Product getProductBySku (String sku) {
-        for(int i = 0; i < listProduct.size(); i++) {
-            String productSku = listProduct.get(i).getSku();
-            if(productSku.equals(sku)) {
-                return listProduct.get(i);
+        for (Product product : listProduct) {
+            String productSku = product.getSku();
+            if (productSku.equals(sku)) {
+                return product;
             }
         }
         return null;

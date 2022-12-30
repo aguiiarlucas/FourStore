@@ -1,9 +1,13 @@
 package br.com.fourstore.sistema.utils;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validations {
+
+    Scanner sc = new Scanner(System.in);
+    public static int id;
 
     public int menuValidation(String input, String verification) {
         int opc;
@@ -26,17 +30,16 @@ public class Validations {
 
         return retorno;
     }
- /*
- credits by StackOverFlow
-  */
+
     private boolean checkLuhn(String value) {
+
+
         value = value.replace(" ", "");
         int sum = 0;
         boolean shouldDouble = false;
 
         for (int i = value.length() - 1; i >= 0; i--) {
             int digit = Integer.parseInt(value.substring(i, i + 1));
-
             if (shouldDouble) {
                 if ((digit *= 2) > 9) {
                     digit -= 9;
@@ -62,8 +65,63 @@ public class Validations {
         return true;
     }
 
+    public String regexInteger() {
+        String quantity;
+        boolean flag =true;
+        do {//verificaçao para ver se tem somente numeros
+
+
+            System.out.println("Digite a quantidade");
+            quantity = sc.next();
+            if (quantity.matches("\\d+")) {
+                flag =false;
+            }
+        } while (flag);
+        return quantity;
+
+    }
+
+
+    public String regexPurchasePrice() {
+        String quantity;
+        boolean flag =true;
+
+        do {//verificaçao para ver se tem somente numeros
+
+            System.out.println("Digite o valor da compra");
+            quantity = sc.next();
+            if (quantity.matches("^(?:0|[1-9]\\d*)\\.[0-9]+$")) {
+                  flag = false;
+
+            }
+
+        } while (flag);
+        return quantity;
+    }
+
+    public String regexSalePrice() {
+        String quantity;
+        boolean flag =true;
+        do {//verificaçao para ver se tem somente numeros
+
+
+            System.out.println("Digite o valor da Venda");
+            quantity = sc.next();
+            if (quantity.matches("^(?:0|[1-9]\\d*)\\.[0-9]+$")) {
+                flag = false;
+            }
+        } while (flag);
+        return quantity;
+
+    }
+
+    public void gerarId() {
+        System.out.println("Id gerado");
+        id++;
+    }
+
     public boolean validateCpfRegex(String sku) {
-        String pattern = "([0-9]{3}[\\.][0-9]{3}[\\.][0-9]{3}[\\-][0-9]{2})";
+        String pattern = "(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})";
         Pattern regex = Pattern.compile(pattern);
 
         Matcher matcher = regex.matcher(sku);

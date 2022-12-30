@@ -16,6 +16,7 @@ public class SaleController {
     private final ClientData clientData = new ClientData();
 
     public String addToCart(Integer quantity, String sku) { // adicionei o sku e a quantity que vai no carrinho ( o sku ja contei o produto :?)
+
         if (saleService.addToCart(sku, quantity)) {
             return "\n Produto adicionado com sucesso!\n";
         }

@@ -7,9 +7,8 @@ import br.com.fourstore.sistema.enums.TypeEnum;
 
 public class Product {
 
-
-    private String sku;
-    private String id;
+    private  String sku;
+    private  String id ;
     private String description;
     private TypeEnum type;
     private SizeEnum size;
@@ -19,17 +18,17 @@ public class Product {
     private Double purchasePrice;
     private Double salePrice;
 
-    public Product( String sku, Integer quantity, Double purchasePrice, Double salePrice) {
+    public Product(String sku, Integer quantity, Double purchasePrice, Double salePrice) {
 
         this.sku = sku;
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
         this.salePrice = salePrice;
         parseSku(sku);
-         //updateProductBySku
+        //updateProductBySku
     }
 
-    public Product(String id ,String sku, String description, Integer quantity, Double purchasePrice, Double salePrice) {
+    public Product(String id, String sku, String description, Integer quantity, Double purchasePrice, Double salePrice) {
         this.id = id;
         this.sku = sku;
         this.description = description;
@@ -37,20 +36,22 @@ public class Product {
         this.purchasePrice = purchasePrice;
         this.salePrice = salePrice;
         parseSku(sku);
-        //cadProdut
+
     }
+
+
 
     public Product(String sku, String id, Integer quantity, Double purchasePrice, Double salePrice) {
-        this.sku =sku;
+        this.sku = sku;
         this.id = id;
-        this.quantity=quantity;
+        this.quantity = quantity;
         this.purchasePrice = purchasePrice;
-        this.salePrice=salePrice;
+        this.salePrice = salePrice;
     }
 
-    /*public Product( String sku, String description, TypeEnum type, SizeEnum size, ColorEnum color, CategoryEnum category, Integer quantity, Double purchasePrice, Double salePrice) {
+    public Product(String sku, String id, String description, TypeEnum type, SizeEnum size, ColorEnum color, CategoryEnum category, Integer quantity, Double purchasePrice, Double salePrice) {
         this.sku = sku;
-        //.id = id;
+        this.id = id;
         this.description = description;
         this.type = type;
         this.size = size;
@@ -59,10 +60,7 @@ public class Product {
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
         this.salePrice = salePrice;
-        parseSku(sku);
-    }*/
-
-
+    }
 
     public String getSku() {
         return sku;
@@ -136,6 +134,10 @@ public class Product {
         this.purchasePrice = purchasePrice;
     }
 
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
+    }
+
     public Double getSalePrice() {
         return salePrice;
     }
@@ -160,13 +162,17 @@ public class Product {
         this.quantity -= quantity;
     }
 
-
     @Override
     public String toString() {
-        return "\n\nid: " + getId() + "\nDescricao: " + ((this.description == null) ? "" : this.description)
-                + "\nTipo: " + getType() + "\nTamanho: " + getSize() + "\nCor: " + getColor() +
-                "\nCategoria: " + getCategory() + "\nQuantidade: " + getQuantity()
-                + "\nPreço de compra: " + getPurchasePrice() + "\nPreço de venda: " + getSalePrice() + "\n\n";
+        return "\n\n Id: " + getId()
+                +"\nDescricao: " + ((this.description == null) ? "" : this.description)
+                +"\nTipo: " + getType()
+                +"\nTamanho: "+ getSize()
+                +"\nCor: " + getColor()
+                +"\nCategoria: " + getCategory()
+                +"\nQuantidade: " + getQuantity()
+                +"\nPreço de compra: " + getPurchasePrice()
+                + "\nPreço de venda: " + getSalePrice() + "\n\n";
     }
 
 

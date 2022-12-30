@@ -15,9 +15,6 @@ public class ProductController {
         Product product = new Product(id, sku, description, quantity, purchasePrice, salePrice);
         productService.cadProduct(product);
 
-        if (product == null) {
-            return aux = "Não foi possível cadastrar o produto";
-        }
         aux = "\nO produto foi registrado com sucesso\n"
                 + "\n SKU: " + product.getSku()
                 + "\n ID: " + product.getId()
@@ -31,7 +28,9 @@ public class ProductController {
                 + "\n Sale Price: " + product.getSalePrice();
         return aux;
 
+
     }
+
 
     public Boolean productIsRegistered(String sku) {
         return productService.registeredProduct(sku);
@@ -59,6 +58,7 @@ public class ProductController {
         if (productService.deleteProductBySku(sku)) return "Produto deletado";
         return "Não existe nenhum produto com o sku" + sku;
     }
+
 
     public String updateProductById(String id, Integer quantity, Double purchasePrice, Double salePrice) {
         Product product = productService.getById(id);
@@ -88,7 +88,6 @@ public class ProductController {
         productService.decrementProduct(sku, qtt);
     }
 
-
     public boolean validateSku(String sku) {
         if (!validations.validateSkuRegex(sku)) {
             return false;
@@ -101,4 +100,6 @@ public class ProductController {
 
         return (size <= 22 && size >= 18) && (category <= 34 && category >= 30) && (color <= 6 && color >= 1) && (type <= 51 && type >= 44);
     }
+
+
 }

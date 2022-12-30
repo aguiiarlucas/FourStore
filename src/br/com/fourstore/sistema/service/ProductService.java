@@ -1,8 +1,6 @@
 package br.com.fourstore.sistema.service;
 
 import br.com.fourstore.sistema.data.ProductData;
-import br.com.fourstore.sistema.enums.CategoryEnum;
-import br.com.fourstore.sistema.enums.SizeEnum;
 import br.com.fourstore.sistema.model.Product;
 
 import java.util.ArrayList;
@@ -15,11 +13,10 @@ public class ProductService {
     }
 
     public boolean registeredProduct(String sku) {
-        if (productData.getProductBySku(sku) == null) {
-            return false;
-        }
-        return true;
+        return productData.getProductBySku(sku) != null;
     }
+
+
 
     public Boolean updateBySku(Product updateProduct) {
         String sku = updateProduct.getSku();
@@ -109,10 +106,9 @@ public class ProductService {
 
     }
 
-    public Boolean decrementProduct(String sku, Integer qtd) {
+    public void decrementProduct(String sku, Integer qtd) {
         Product product = productData.getProductBySku(sku);
         product.decrementProduct(qtd);
-        return null;
     }
 
 

@@ -13,7 +13,7 @@ public class SaleService {
 
     static ArrayList<Product> cart = new ArrayList<Product>();
     ProductController productController = new ProductController();
-    //ProductData productData = new ProductData();
+   //ProductData productData = new ProductData();
     SaleData saleData = new SaleData();
 
     public void saveSale(Sale sale) {
