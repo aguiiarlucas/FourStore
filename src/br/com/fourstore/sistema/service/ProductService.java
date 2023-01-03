@@ -20,7 +20,7 @@ public class ProductService {
         String Sku = updatedProduct.getSku();
 
         Product originalProduct = productData.getProductBySku(Sku);
-        if(originalProduct == null) {
+        if (originalProduct == null) {
             return false;
         }
 
@@ -29,23 +29,25 @@ public class ProductService {
 
     private Boolean update(Product updateProduct, Product currentProduct) {
         Integer updateQuantity = updateProduct.getQuantity();
-        if (Integer.MAX_VALUE > updateQuantity){
+        Double updatePurchasePrice = updateProduct.getPurchasePrice();
+        Double updateSalePrice= updateProduct.getSalePrice();
+
+        if (updateQuantity == 0 && updatePurchasePrice == 0 && updateSalePrice == 0) {
+            return false;
+        }
+
+        if (Integer.MAX_VALUE > updateQuantity && updateQuantity > 0) {
             currentProduct.setQuantity((updateProduct.getQuantity()));
         }
-        if (updateQuantity < 0) {
-            return false;
-        }
-        productData.update(currentProduct);
-        Double updatePurchasePrice = updateProduct.getPurchasePrice();
-        if (Double.MAX_VALUE > updatePurchasePrice ) {
+        if (Double.MAX_VALUE > updatePurchasePrice && updatePurchasePrice > 0) {
             currentProduct.setPurchasePrice(updateProduct.getPurchasePrice());
+
         }
-        if (updatePurchasePrice < 0.0) {
-            return false;
+        if (Double.MAX_VALUE > updateSalePrice && updateSalePrice > 0) {
+            currentProduct.setSalePrice(updateProduct.getSalePrice());
         }
+
         productData.update(currentProduct);
-
-
         return true;
     }
 
