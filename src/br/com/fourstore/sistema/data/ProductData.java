@@ -30,19 +30,20 @@ public class ProductData implements DataInterface<Product> {
     public void update(Product product) {
         for (int i = 0; i < listProduct.size(); i++) {
             Product productList = listProduct.get(i);
+
             if (productList.getId().equals(product.getId())) {
-                productList.update(product);
+                    listProduct.set(i,product);
+
 
             }
+
         }
+        System.out.println(product);
     }
 
     @Override
     public ArrayList<Product> listAll() {
-        if (listProduct != null) {
-            return listProduct;
-        }
-        return null;
+        return listProduct;
     }
 
     public Product getById(String id) {

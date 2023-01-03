@@ -6,13 +6,13 @@ import br.com.fourstore.sistema.utils.Validations;
 
 public class ProductController {
 
-    private static ProductService productService = new ProductService();
-    private static Validations validations = new Validations();
+    private static final ProductService productService = new ProductService();
+    private static final Validations validations = new Validations();
 
 
-    public String cadProduct(String id, String sku, String description, Integer quantity, Double purchasePrice, Double salePrice) {
+    public String cadProduct(String sku, String description, String id, Integer quantity, Double purchasePrice, Double salePrice) {
         String aux = "";
-        Product product = new Product(id, sku, description, quantity, purchasePrice, salePrice);
+        Product product = new Product(sku, description, id, quantity, purchasePrice, salePrice);
         productService.cadProduct(product);
 
         aux = "\nO produto foi registrado com sucesso\n"
@@ -60,16 +60,16 @@ public class ProductController {
     }
 
 
-    public String updateProductById(String id, Integer quantity, Double purchasePrice, Double salePrice) {
-        Product product = productService.getById(id);
-        String sku = product.getSku();
-        Product product1 = new Product(sku, id, quantity, purchasePrice, salePrice);
-        return (productService.updateBySku(product1)) ? "Produto alterado com sucesso!" : "Dados inválidos! O produto não foi alterado.";
+    public String updateProductBySku(String sku, Integer quantity, Double purchasePrice, Double salePrice) {
+        Product product = new Product(sku, quantity, purchasePrice, salePrice);
+        return (productService.updateBySku(product)) ? "Produto alterado com sucesso!" : "Dados invalidos! O produto nao foi alterado.";
     }
 
-    public String updateProductBySku(String sku, Integer quantity, Double purchasePrice, Double salePrice) {
-        Product product1 = new Product(sku, quantity, purchasePrice, salePrice);
-        return (productService.updateBySku(product1)) ? "Produto alterado com sucesso!" : "Dados inválidos! O produto não foi alterado.";
+    public String updateProductById(String id, Integer quantity, Double purchasePrice, Double salePrice) {
+        Product oldProduct = productService.getById(id);
+        String sku = oldProduct.getSku();
+        Product product = new Product(sku, quantity, purchasePrice, salePrice);
+        return (productService.updateBySku(product)) ? "Produto alterado com sucesso!" : "Dados invalidos! O produto nao foi alterado.";
     }
 
     public String listProducts() {

@@ -39,8 +39,6 @@ public class Product {
 
     }
 
-
-
     public Product(String sku, String id, Integer quantity, Double purchasePrice, Double salePrice) {
         this.sku = sku;
         this.id = id;
@@ -60,6 +58,10 @@ public class Product {
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
         this.salePrice = salePrice;
+    }
+
+    public Product() {
+
     }
 
     public String getSku() {

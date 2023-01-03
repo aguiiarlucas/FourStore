@@ -66,6 +66,7 @@ public class Validations {
     }
 
     public String regexInteger() {
+
         String quantity;
         boolean flag =true;
         do {//verificaçao para ver se tem somente numeros
@@ -90,7 +91,7 @@ public class Validations {
 
             System.out.println("Digite o valor da compra");
             quantity = sc.next();
-            if (quantity.matches("^(?:0|[1-9]\\d*)\\.[0-9]+$")) {
+            if (quantity.matches("^[0-9]+([,.][0-9]?)?$")) {
                   flag = false;
 
             }
@@ -107,7 +108,7 @@ public class Validations {
 
             System.out.println("Digite o valor da Venda");
             quantity = sc.next();
-            if (quantity.matches("^(?:0|[1-9]\\d*)\\.[0-9]+$")) {
+            if (quantity.matches("^[0-9]+([,.][0-9]?)?$")) {
                 flag = false;
             }
         } while (flag);

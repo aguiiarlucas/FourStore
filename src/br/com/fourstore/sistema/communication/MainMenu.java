@@ -25,8 +25,6 @@ public class MainMenu {
     private Product product;
 
 
-
-
     public MainMenu() {
         this.menuController = new MenuController();
         this.sc = new Scanner(System.in);
@@ -170,13 +168,14 @@ public class MainMenu {
 
             }
         }
-        Integer opcao;
         String creditoCard;
         String debitCard;
         String pix;
         PaymentMethodEnum paymentmethod;
 
+
         while (true) {
+
             System.out.println(
                     """
                             Digite a forma de pagamento:\s
@@ -184,7 +183,8 @@ public class MainMenu {
                             2 -cartao de debito\s
                             3- dinheiro\s
                             4-pix""");
-            opcao = sc.nextInt();
+
+            opc = sc.nextInt();
 
             switch (opc) {
                 case 1:
@@ -302,7 +302,7 @@ public class MainMenu {
     private void updateProductBySku() {
         String sku;
         while (true) {
-            System.out.println("\n insira o ID do produto:");
+            System.out.println("\n insira o Sku do produto:");
             sku = sc.next();
             String idIsValid = productController.getProductById(sku);
             if (idIsValid.equals("Não existe produto com este sku" + sku)) {
@@ -311,14 +311,8 @@ public class MainMenu {
             }
             break;
         }
-        this.updateProduct(null, null);
+        this.updateProduct(null, sku);
     }
-
-
-
-
-
-
 
 
     public void cadProduct() {
@@ -337,26 +331,26 @@ public class MainMenu {
 
         System.out.println("Digite a descricao do produto: ");
         String description = sc.next();
-
         validations.gerarId();
-        validations.regexInteger();
-        validations.regexPurchasePrice();
-        validations.regexSalePrice();
+        Integer quantTeste = Integer.parseInt(validations.regexInteger());
+        Double valorCompraTeste = Double.parseDouble(validations.regexPurchasePrice().replace(",", "."));
+        Double valorVendaTeste = Double.parseDouble(validations.regexSalePrice().replace(",", "."));
 
-        String retorno = productController.cadProduct(String.valueOf(Validations.id), sku, description, Integer.parseInt(validations.regexInteger()),Double.parseDouble(validations.regexPurchasePrice()),Double.parseDouble(validations.regexSalePrice()));
+
+        String retorno = productController.cadProduct(String.valueOf(Validations.id), sku, description, quantTeste, valorCompraTeste, valorVendaTeste);
         System.out.println(retorno);
     }
 
 
-
     public void updateProductById() {
         String id;
+
         while (true) {
             System.out.println("\n insira o ID do produto:");
             id = sc.next();
             String idIsValid = productController.getProductById(id);
             if (idIsValid.equals("Não existe produto com este id" + id)) {
-                System.out.println(idIsValid = ". Tente novamente");
+                System.out.println(idIsValid + ". Tente novamente");
                 continue;
             }
             break;
@@ -367,8 +361,8 @@ public class MainMenu {
 
     public void updateProduct(String id, String sku) {
         Integer qtt = Integer.MAX_VALUE;
-        double purchasePrice = 0.0;
-        double salePrice = 0.0;
+        double purchasePrice=0.0;
+        double salePrice=0.0;
         String opc;
         boolean aux = true;
 
@@ -378,12 +372,15 @@ public class MainMenu {
             System.out.println("2 - Novo preço de compra");
             System.out.println("3 - Novo preço de venda");
             System.out.println("4 - Atualização de dados ");
+
             System.out.println("Insira uma opção");
             opc = sc.next();
 
             switch (opc) {
+
                 case "1":
                     qtt = this.updateNewQuantityProduct();
+
                     break;
                 case "2":
                     purchasePrice = this.updateNewPurchasePrice();
@@ -392,11 +389,12 @@ public class MainMenu {
                     salePrice = this.updateNewSalePrice();
                     break;
                 case "4":
-                    if (id != null) {
+                    if(id != null) {
                         System.out.println(productController.updateProductById(id, qtt, purchasePrice, salePrice));
                         aux = false;
-                    } else if (sku != null) {
+                    } else if(sku != null) {
                         System.out.println(productController.updateProductBySku(sku, qtt, purchasePrice, salePrice));
+                        aux = false;
                     } else {
                         System.out.println("Não foi possível realizar a atualização dos dados. Tente novamente.");
                     }
@@ -410,24 +408,25 @@ public class MainMenu {
     }
 
     public Integer updateNewQuantityProduct() {
-        int qtt;
+        int quantity;
         while (true) {
-            System.out.println("Nova quantidade em estoque : ");
-            qtt = sc.nextInt();
-            if (qtt < 0) {
-                System.out.println("Valor inválido. Tente novamente");
+            System.out.print("\nInsira a nova quantidade em estoque do produto: ");
+            quantity = sc.nextInt();
+            if (quantity  <0 ) {
+                System.out.println("Valor inválido. Tente novamente.");
                 continue;
             }
             break;
         }
-        return qtt;
+        return quantity;
     }
+
 
     public Double updateNewPurchasePrice() {
         double purchasePrice;
         while (true) {
             System.out.println("Novo preço de compra: ");
-            purchasePrice = sc.nextDouble();
+            purchasePrice = Double.parseDouble(sc.next());
             if (purchasePrice < 0.0) {
                 System.out.println("Valor inválido. Tente novamente");
                 continue;
@@ -441,8 +440,9 @@ public class MainMenu {
         double salePrice;
         while (true) {
             System.out.println("Novo preço de venda: ");
-            salePrice = sc.nextDouble();
+            salePrice = Double.parseDouble(sc.next());
             if (salePrice < 0.0) {
+
                 System.out.println("Valor inválido. Tente novamente");
                 continue;
             }
@@ -480,7 +480,5 @@ public class MainMenu {
         String id = sc.next();
         System.out.println(productController.getProductById(id));
     }
-
-
 
 }

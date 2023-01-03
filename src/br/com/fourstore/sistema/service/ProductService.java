@@ -16,35 +16,36 @@ public class ProductService {
         return productData.getProductBySku(sku) != null;
     }
 
+    public Boolean updateBySku(Product updatedProduct) {
+        String Sku = updatedProduct.getSku();
 
-
-    public Boolean updateBySku(Product updateProduct) {
-        String sku = updateProduct.getSku();
-        Product product = productData.getProductBySku(sku);
-        if (product != null) {
+        Product originalProduct = productData.getProductBySku(Sku);
+        if(originalProduct == null) {
             return false;
         }
-        return update(updateProduct, product);
+
+        return update(updatedProduct, originalProduct);
     }
 
     private Boolean update(Product updateProduct, Product currentProduct) {
-        //UpdateQuantityProduct.
         Integer updateQuantity = updateProduct.getQuantity();
-        if (updateQuantity == Integer.MAX_VALUE) {
-            updateProduct.setQuantity(currentProduct.getQuantity());
+        if (Integer.MAX_VALUE > updateQuantity){
+            currentProduct.setQuantity((updateProduct.getQuantity()));
         }
         if (updateQuantity < 0) {
             return false;
         }
-        //UpdatePurchasePrice
+        productData.update(currentProduct);
         Double updatePurchasePrice = updateProduct.getPurchasePrice();
-        if (updatePurchasePrice == 0.0) {
-            updateProduct.setPurchasePrice(currentProduct.getPurchasePrice());
+        if (Double.MAX_VALUE > updatePurchasePrice ) {
+            currentProduct.setPurchasePrice(updateProduct.getPurchasePrice());
         }
-        if (updatePurchasePrice < 0) {
+        if (updatePurchasePrice < 0.0) {
             return false;
         }
-        productData.update(updateProduct);
+        productData.update(currentProduct);
+
+
         return true;
     }
 
